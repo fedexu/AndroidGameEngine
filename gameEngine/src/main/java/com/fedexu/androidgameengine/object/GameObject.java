@@ -17,42 +17,72 @@ import java.util.Map;
 
 
 /**
- * Created by Federico Peruzzi on 19/12/2017.
+ * Created by Federico Peruzzi.
+ * Abstract class for all GameObjects implemented.
  *
  */
 
 public abstract class GameObject {
 
-    // Shape Define
+   /**
+	* Shape Define
+	*/
     private Polygon polygon;
 
+   /**
+	* Last fps object rapresentation
+	*/
     private Polygon oldPolygon;
 
-    // Collision calculate
+   /**
+	* Minum bounding box for AABB collision
+	*/
     private Rect boundingBox;
 
-    // usare Bitmap
+   /**
+	* Animations objects
+	*/
     private Map<String, Animation> animations;
+	
+   /**
+	* Current index Animation used
+	*/
     private String currentAnimation;
 
-    // This object is uset do draw the bounding box for debug
+   /**
+	* This object is uset do draw the bounding box for debug
+	*/ 
     private Paint paint;
 
-    // Physics variable
+   /**
+	* Angle to apply the speed vector
+	*/
     private double directionAngle;
-
-    // If 0 upon collision the method onCollide() will not be called
+	
+   /**
+	* Speed vector
+	* If the speed is equal to 0 the method onCollide() will not be called
+	*/
     private float speed;
 
-    // Object type variable
-    // If false the object will not be drawn
+   /**
+	* If false the object will not be drawn
+	*/ 
     private boolean isVisible;
 
-    // If true the object will not be considerate for collision
+   /**
+	* If true the object will not be considerate for collision and onCollide() method
+	*/
     private boolean isUntouchable;
 
+   /**
+	* If true the object will not update the position regardless the speed applyed
+	*/
     private boolean immovable;
 
+   /**
+	* Empty costructor
+	*/
     public GameObject() {
 
         this.polygon = new Polygon();
