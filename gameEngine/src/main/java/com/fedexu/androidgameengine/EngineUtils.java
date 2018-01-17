@@ -17,11 +17,19 @@ import java.io.Writer;
 
 
 /**
- * Created by fperuzzi on 23/12/2017.
+ * Created by Federico Peruzzi.
+ * Utility function for the Engine.
  *
  */
 
 public class EngineUtils {
+
+    /**
+     * Normalize the input angle to stay in the 360 degree.
+     *
+     * @param angle
+     * @return normalized angle
+     */
 
     public static double normalizeAngle(double angle) {
         if (angle > 0)
@@ -33,6 +41,12 @@ public class EngineUtils {
         return angle;
     }
 
+    /**
+     * Read the file and return a string with the byte in the file.
+     *
+     * @param resourceReader
+     * @return string with json.
+     */
     public static String readJsonfile(InputStream resourceReader){
 
         Writer writer = new StringWriter();
@@ -55,22 +69,60 @@ public class EngineUtils {
         return writer.toString();
     }
 
+    /**
+     * Parse the given json into the type of input class
+     * with the Gson library.
+     *
+     * @param type
+     * @param jsonString
+     * @param <T>
+     * @return Object T filled.
+     */
     public static <T> T parseJsonString(Class<T> type, String jsonString) {
         Gson gson = new GsonBuilder().create();
         return gson.fromJson(jsonString, type);
     }
 
-    public static void pointPercToPointPx(BasicObject b, Point size){
-        double[] x = b.getX();
-        double[] y = b.getY();
+    /**
+     * Calculate and update the BasicObject x,y coordinate
+     * from a % value to a px value.
+     * @param basicObject
+     * @param screenSize
+     */
+    public static void pointPercToPointPx(BasicObject basicObject, Point screenSize){
+        double[] x = basicObject.getX();
+        double[] y = basicObject.getY();
 
-        for(int i = 0; i < b.getX().length; i++){
-            x[i] = (x[i]/100) * size.x;
-            y[i] = (y[i]/100) * size.y ;
+        for(int i = 0; i < basicObject.getX().length; i++){
+            x[i] = (x[i]/100) * screenSize.x;
+            y[i] = (y[i]/100) * screenSize.y ;
         }
-        b.setX(x);
-        b.setY(y);
+        basicObject.setX(x);
+        basicObject.setY(y);
 
+    }
+
+    /**
+     * Calculate the result angle with a bounce on the x axis.
+     *
+     * @return double angle.
+     */
+    public static double bounceLeftRight(double directionAngle) {
+        //controllo se sono nel primo o nel terzo quandrante
+        if ( (Math.toRadians(directionAngle) > 0 && Math.toRadians(directionAngle) < Math.PI/2 )||
+                (Math.toRadians(directionAngle) > Math.PI && Math.toRadians(directionAngle) < (Math.PI*3)/2))
+            return directionAngle + 90;
+        else
+            return directionAngle - 90;
+    }
+
+    /**
+     * Calculate the result angle with a bounce on the y axis.
+     *
+     * @return double angle.
+     */
+    public static double bounceTopBottom(double directionAngle) {
+        return Math.abs(directionAngle - 360);
     }
 
 }
@@ -162,4 +214,5 @@ public class EngineUtils {
         return Math.sqrt( (p1.getX() - p2.getX())*(p1.getX() - p2.getX()) +
                 (p1.getY() - p2.getY())*(p1.getY() - p2.getY())
         );
-    }*/
+    }
+*/

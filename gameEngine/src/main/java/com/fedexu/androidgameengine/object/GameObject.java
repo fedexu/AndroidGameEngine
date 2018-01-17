@@ -25,63 +25,64 @@ import java.util.Map;
 public abstract class GameObject {
 
    /**
-	* Shape Define
+	* Shape Define.
 	*/
     private Polygon polygon;
 
    /**
-	* Last fps object rapresentation
+	* Last fps object rapresentation.
 	*/
     private Polygon oldPolygon;
 
    /**
-	* Minum bounding box for AABB collision
+	* Minum bounding box for AABB collision.
 	*/
     private Rect boundingBox;
 
    /**
-	* Animations objects
+	* Animations objects.
 	*/
     private Map<String, Animation> animations;
 	
    /**
-	* Current index Animation used
+	* Current index Animation used.
 	*/
     private String currentAnimation;
 
    /**
-	* This object is uset do draw the bounding box for debug
+	* This object is uset do draw the bounding box for debug.
 	*/ 
     private Paint paint;
 
    /**
-	* Angle to apply the speed vector
+	* Angle to apply the speed vector.
 	*/
     private double directionAngle;
 	
    /**
 	* Speed vector
-	* If the speed is equal to 0 the method onCollide() will not be called
+	* If the speed is equal to 0 the method onCollide() will not be called.
 	*/
     private float speed;
 
    /**
-	* If false the object will not be drawn
+	* If false the object will not be drawn.
 	*/ 
     private boolean isVisible;
 
    /**
-	* If true the object will not be considerate for collision and onCollide() method
+	* If true the object will not be considerate for collision and onCollide() method.
 	*/
     private boolean isUntouchable;
 
    /**
-	* If true the object will not update the position regardless the speed applyed
+	* If true the object will not update the position regardless the speed applyed.
 	*/
     private boolean immovable;
 
    /**
-	* Empty costructor
+	* Empty constructor:
+    * simply initialize the object value.
 	*/
     public GameObject() {
 
@@ -102,6 +103,14 @@ public abstract class GameObject {
 
     }
 
+    /**
+     * Constructor with the BasicObject class:
+     * this constructor initialize the object like the empty
+     * constructor but create the Polygon element with the x,y points
+     * and the visibility flag defined by the BasicObject.
+     *
+     * @param basicObject
+     */
     public GameObject(BasicObject basicObject){
 
         this.polygon = new Polygon();
@@ -124,6 +133,8 @@ public abstract class GameObject {
         }
 
     }
+
+    // Setter/getter
 
     public Polygon getPolygon() {
         return this.polygon;
@@ -189,22 +200,51 @@ public abstract class GameObject {
         return directionAngle;
     }
 
-    public void setDirectionAngle(double directionAngle) {
-        this.directionAngle = EngineUtils.normalizeAngle(directionAngle);
-    }
-
-    public double getSpeedX() {
-        return Math.cos(Math.toRadians(this.getDirectionAngle()) * this.getSpeed());
-    }
-
-    public double getSpeedY() {
-        return Math.sin(Math.toRadians(this.getDirectionAngle()) * this.getSpeed());
-    }
-
     public Point getCenter() {
         return this.polygon.getCenter();
     }
 
+    public void setCurrentAnimation(String name){
+        this.currentAnimation = name;
+    }
+
+    // END setter/getter
+
+    /**
+     * Set the direction angle. Normalize the angle to
+     * stay in the 360 degree before the set.
+     *
+     * @param directionAngle
+     */
+    public void setDirectionAngle(double directionAngle) {
+        this.directionAngle = EngineUtils.normalizeAngle(directionAngle);
+    }
+
+    /**
+     * Calculate the x value of the speed vector.
+     *
+     * @return double
+     */
+    public double getSpeedX() {
+        return Math.cos(Math.toRadians(this.getDirectionAngle()) * this.getSpeed());
+    }
+
+    /**
+     * Calculate the y value of the speed vector.
+     *
+     * @return double
+     */
+    public double getSpeedY() {
+        return Math.sin(Math.toRadians(this.getDirectionAngle()) * this.getSpeed());
+    }
+
+    /**
+     * Gets the smallest {@link Rect} that can completely contain
+     * the <code>Polygon</code>.
+     *
+     * @return a <code>Rectangle</code> that defines the bounds of this
+     * <code>Polygon</code>.
+     */
     public Rect getBoundingBox() {
         if (boundingBox == null){
             this.boundingBox = this.polygon.getBounds();
@@ -212,38 +252,39 @@ public abstract class GameObject {
         return boundingBox;
     }
 
+    /**
+     * Keeps consistent the bounding box value.
+     */
     public void updateBoundingBox(){
         this.boundingBox = this.polygon.getBounds();
     }
 
+    /**
+     * Get the animation in use.
+     *
+     * @return <code>Animation</code>
+     */
     public Animation getCurrentAnimation(){
         if(this.animations.isEmpty())
             return null;
         return this.animations.get(this.currentAnimation);
     }
 
-    public void setCurrentAnimation(String name){
-        this.currentAnimation = name;
-    }
-
-    public double bounceLeftRight() {
-        //controllo se sono nel primo o nel terzo quandrante
-        if ( (Math.toRadians(this.directionAngle) > 0 && Math.toRadians(this.directionAngle) < Math.PI/2 )||
-                (Math.toRadians(this.directionAngle) > Math.PI && Math.toRadians(this.directionAngle) < (Math.PI*3)/2))
-            return this.directionAngle + 90;
-        else
-            return this.directionAngle - 90;
-    }
-
-    public double bounceTopBottom() {
-        return Math.abs(this.directionAngle - 360);
-    }
-
+    /**
+     * Easy method to fix the "stuck inside" problem with the AABB collision.
+     * To be called in the onCollide method.
+     */
     public void comeBack() {
         this.polygon = new Polygon(this.oldPolygon.xpoints, this.oldPolygon.ypoints, this.oldPolygon.npoints);
         this.updateBoundingBox();
     }
 
+    /**
+     * Translate the object in the given x,y point.
+     *
+     * @param x
+     * @param y
+     */
     public void translate(int x, int y) {
         this.oldPolygon = new Polygon(this.polygon.xpoints, this.polygon.ypoints, this.polygon.npoints);
         int deltaX = x - this.getCenter().x;
@@ -252,19 +293,44 @@ public abstract class GameObject {
         this.updateBoundingBox();
     }
 
+    /**
+     * Translate the object in the given x point.
+     * Ignore the y axis.
+     *
+     * @param x
+     */
     public void translateX(int x) {
         translate(x, this.getCenter().y);
     }
 
+    /**
+     * Translate the object in the given y point.
+     * Ignore the x axis.
+     *
+     * @param y
+     */
     public void translateY(int y) {
         translate(this.getCenter().x, y);
     }
 
-    public void addAnimation(String name, Animation animation){
-        this.animations.put(name,animation);
-        this.currentAnimation = name;
+    /**
+     * Add an animation into the animations collection.
+     *
+     * @param key
+     * @param animation
+     */
+    public void addAnimation(String key, Animation animation){
+        this.animations.put(key,animation);
+        this.currentAnimation = key;
     }
 
+    /**
+     * Method for update the x,y coordinate of the object.
+     * If the object is marked as immovable this method will be skip.
+     * It is used by the Engine itself. Not need to be called by the user.
+     *
+     * @param gameData
+     */
     public void updatePosition(GameData gameData) {
         if (!this.immovable) {
             this.translate((int) ((Math.cos(Math.toRadians(this.getDirectionAngle())) * this.getSpeed()) * (1 / (double) gameData.getFps()) + this.getCenter().x),
@@ -272,11 +338,29 @@ public abstract class GameObject {
         }
     }
 
-
+    /**
+     * Abstract method need to be implement by the user.
+     * Will be call every game loop.
+     *
+     * @param gameData
+     */
     public abstract void update(GameData gameData);
 
+    /**
+     * Abstract method need to be implement by the user.
+     * Will be call in every collision detect.
+     *
+     * @param collideObject
+     */
     public abstract void onCollide(GameObject collideObject);
 
+    /**
+     * Abstract method need to be implement by the user.
+     * Will be call when the object is touch on the screen.
+     *
+     * @param gameData
+     * @param motionEvent
+     */
     public abstract void onTouch(GameData gameData, MotionEvent motionEvent);
 
 }
