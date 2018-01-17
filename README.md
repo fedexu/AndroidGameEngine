@@ -37,6 +37,11 @@ avoid to apply the collision logic inside the object collided in order to avoid 
 
 To draw the Animation the Engine works with sprite sheets and can hold more sprites for each object.
 
+## Level Builder
+
+The Engine have a level builder written on html/jQuery. It offers an editor to add and move elements on the screen,
+positioned according to the level to be created you can export the composition by saving a json file with the necessary data.
+If you want, you can also later reload the built level through the import feature that arranges the elements as they were saved.
 
 ## Import the engine
 

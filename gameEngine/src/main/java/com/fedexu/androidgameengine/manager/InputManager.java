@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 /**
  * Created by Federico Peruzzi.
- * Manage the input event and call the <code>onTouch()
+ * Manage the input event and call the <code>onTouch()</code>
  * for the object touched in the screen.
  *
  */

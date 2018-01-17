@@ -6,7 +6,7 @@ import android.graphics.Rect;
 import java.util.Arrays;
 
 /**
- * Created by Federico Peruzzi on 03/01/2018.
+ * Created by Federico Peruzzi.
  *
  */
 
@@ -154,6 +154,7 @@ public class Polygon {
      * Translates the vertices of the <code>Polygon</code> by
      * <code>deltaX</code> along the x axis and by
      * <code>deltaY</code> along the y axis.
+     *
      * @param deltaX the amount to translate along the X axis
      * @param deltaY the amount to translate along the Y axis
      */
@@ -172,12 +173,13 @@ public class Polygon {
         }*/
     }
 
-    /*
+    /**
      * Calculates the bounding box of the points passed to the constructor.
      * Sets <code>bounds</code> to the result.
-     * @param xpoints[] array of <i>x</i> coordinates
-     * @param ypoints[] array of <i>y</i> coordinates
-     * @param npoints the total number of points
+     *
+     * @param xpoints
+     * @param ypoints
+     * @param npoints
      */
     void calculateBounds(int xpoints[], int ypoints[], int npoints) {
         int boundsMinX = Integer.MAX_VALUE;
