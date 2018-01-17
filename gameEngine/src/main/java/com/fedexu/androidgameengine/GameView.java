@@ -12,7 +12,7 @@ import com.fedexu.androidgameengine.manager.InputManager;
 import com.fedexu.androidgameengine.manager.RenderManager;
 
 /**
- * Created by Federico Peruzzi on 09/01/2018.
+ * Created by Federico Peruzzi.
  *
  */
 
