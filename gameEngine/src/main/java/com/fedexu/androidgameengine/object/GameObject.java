@@ -24,66 +24,66 @@ import java.util.Map;
 
 public abstract class GameObject {
 
-   /**
-	* Shape Define.
-	*/
+    /**
+     * Shape Define.
+     */
     private Polygon polygon;
 
-   /**
-	* Last fps object rapresentation.
-	*/
+    /**
+     * Last fps object rapresentation.
+     */
     private Polygon oldPolygon;
 
-   /**
-	* Minum bounding box for AABB collision.
-	*/
+    /**
+     * Minum bounding box for AABB collision.
+     */
     private Rect boundingBox;
 
-   /**
-	* Animations objects.
-	*/
+    /**
+     * Animations objects.
+     */
     private Map<String, Animation> animations;
-	
-   /**
-	* Current index Animation used.
-	*/
+
+    /**
+     * Current index Animation used.
+     */
     private String currentAnimation;
 
-   /**
-	* This object is uset do draw the bounding box for debug.
-	*/ 
+    /**
+     * This object is uset do draw the bounding box for debug.
+     */
     private Paint paint;
 
-   /**
-	* Angle to apply the speed vector.
-	*/
+    /**
+     * Angle to apply the speed vector.
+     */
     private double directionAngle;
-	
-   /**
-	* Speed vector
-	* If the speed is equal to 0 the method onCollide() will not be called.
-	*/
+
+    /**
+     * Speed vector.
+     * If the speed is equal to 0 the method onCollide() will not be called.
+     */
     private float speed;
 
-   /**
-	* If false the object will not be drawn.
-	*/ 
+    /**
+     * If false the object will not be drawn.
+     */
     private boolean isVisible;
 
-   /**
-	* If true the object will not be considerate for collision and onCollide() method.
-	*/
+    /**
+     * If true the object will not be considerate for collision and onCollide() method.
+     */
     private boolean isUntouchable;
 
-   /**
-	* If true the object will not update the position regardless the speed applyed.
-	*/
+    /**
+     * If true the object will not update the position regardless the speed applyed.
+     */
     private boolean immovable;
 
-   /**
-	* Empty constructor:
-    * simply initialize the object value.
-	*/
+    /**
+     * Empty constructor:
+     * simply initialize the object value.
+     */
     public GameObject() {
 
         this.polygon = new Polygon();
