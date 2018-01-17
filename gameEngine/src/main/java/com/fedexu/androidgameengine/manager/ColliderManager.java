@@ -9,11 +9,20 @@ import java.util.ArrayList;
 
 /**
  * Created by Federico Peruzzi.
- * 
+ * ColliderManager take care of check if there is a
+ * collision between tow object and from witch side.
+ *
  */
 
 public class ColliderManager {
 
+    /**
+     * Detect if there is a collision between two <code>GameObject</code>.
+     *
+     * @param projectile
+     * @param collideObject
+     * @return SideCollision
+     */
     public static SideCollision detectCollision(GameObject projectile, GameObject collideObject) {
         boolean xCollides = projectile.getBoundingBox().right >= collideObject.getBoundingBox().left &&
                 projectile.getBoundingBox().left <= collideObject.getBoundingBox().right;
@@ -26,6 +35,12 @@ public class ColliderManager {
             return SideCollision.NO_COLLISION;
     }
 
+    /**
+     * Detect if there is a collision between a <code>Point</code> and a <code>GameObject</code>.
+     * @param point
+     * @param collideObject
+     * @return SideCollision
+     */
     public static SideCollision detectCollision(Point point, GameObject collideObject) {
         boolean xCollides = point.x >= collideObject.getBoundingBox().left &&
                 point.x <= collideObject.getBoundingBox().right;
@@ -38,7 +53,15 @@ public class ColliderManager {
             return SideCollision.NO_COLLISION;
     }
 
-    //da usare solamente dopo aver prima chiamato la comeBack dell'oggetto su cui indagare il lato toccato
+    /**
+     * Detect witch side of the <code>GameObject</code> collided.
+     * TIP: if the object is stuck inside we have wrong return.
+     * Use before the comeBack() function to avoid mistake.
+     *
+     * @param projectile
+     * @param collideObject
+     * @return SideCollision
+     */
     public static SideCollision detectSideCollision(GameObject projectile, GameObject collideObject) {
 
         boolean leftCollision = projectile.getBoundingBox().left <= collideObject.getBoundingBox().right;
@@ -61,18 +84,24 @@ public class ColliderManager {
         }
     }
 
+    /**
+     * Collision check function take care of calling GameObject's onCollide()
+     * method of both colliding objects when a collision is detects.
+     *
+     * @param gameData
+     */
     public static void collisionCheck(GameData gameData) {
 
-        // detect collision static way
-        // discretizzo gli oggetti da controllare per risparmiare calcolo
+        // Detect collision AABB,
         ArrayList<GameObject> gameObjects = gameData.getGameObjects();
         for (GameObject g : gameObjects) {
-            // controllo solo gli oggetti che si muovono e che non sono intoccabili
+            // To save cycle time we skip objects that have speed != 0 and have untouchable == false.
             if (g.getSpeed() != 0 && !g.isUntouchable()) {
                 for (GameObject collideObject : gameObjects) {
-                    // controllo solo gli oggetti che non sono l'oggetto stesso e non siano intoccabili
+                    // Check only object that isn't itself and isn't untouchable.
                     if (g != collideObject && !collideObject.isUntouchable()) {
                         if (ColliderManager.detectCollision(g, collideObject) == SideCollision.COLLISION) {
+                            // Calling the onCollide().
                             g.onCollide(collideObject);
                             collideObject.onCollide(g);
                         }
@@ -82,19 +111,26 @@ public class ColliderManager {
         }
     }
 
-    //collision Check for a single object
+    /**
+     * Check collision for a GameObject with all other object in the screen.
+     * return the GameObject that the input collide with
+     *
+     * @param gameData
+     * @param objectToCheck
+     * @return
+     */
     public static GameObject collisionCheck(GameData gameData, GameObject objectToCheck) {
 
         ArrayList<GameObject> gameObjects = gameData.getGameObjects();
         for (GameObject collideObject : gameObjects) {
-            // controllo solo gli oggetti che non sono l'oggetto stesso e non siano intoccabili
+            // To save cycle time we skip objects that have speed != 0 and have untouchable == false.
             if (objectToCheck != collideObject && !collideObject.isUntouchable()) {
                 if (ColliderManager.detectCollision(objectToCheck, collideObject) == SideCollision.COLLISION) {
                     return collideObject;
                 }
             }
         }
-        //if nothing was found
+        // Return null is nothing was found.
         return null;
     }
 }
