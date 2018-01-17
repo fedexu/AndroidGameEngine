@@ -1,7 +1,8 @@
 package com.fedexu.androidgameengine.manager;
 
 /**
- * Created by fperuzzi on 27/12/2017.
+ * Created by Federico Peruzzi.
+ * Enumeration for identify the side of a object collision
  *
  */
 

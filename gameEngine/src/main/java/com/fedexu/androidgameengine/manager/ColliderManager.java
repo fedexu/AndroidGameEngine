@@ -8,7 +8,8 @@ import com.fedexu.androidgameengine.object.GameObject;
 import java.util.ArrayList;
 
 /**
- * Created by fperuzzi on 28/12/2017.
+ * Created by Federico Peruzzi.
+ * 
  */
 
 public class ColliderManager {

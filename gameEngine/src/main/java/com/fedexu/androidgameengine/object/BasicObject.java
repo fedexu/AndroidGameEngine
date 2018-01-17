@@ -1,24 +1,48 @@
 package com.fedexu.androidgameengine.object;
 
 /**
- * Created by Federico Peruzzi on 08/01/2018.
+ * Created by Federico Peruzzi.
+ * Class used to create a GameObject fom JsonFile.
  *
  */
 
 public class BasicObject {
 
+    /**
+     * Field used to identify the object on the Level Builder
+     *
+     */
     private int id;
 
+    /**
+     * Map the visible flag of <code>GameObject</code>
+     *
+     */
     private boolean visible;
 
+    /**
+     * Map the untouchable flag of <code>GameObject</code>
+     */
     private boolean untouchable;
 
+    /**
+     * Map the immovable flag of <code>GameObject</code>
+     */
     private boolean immovable;
 
+    /**
+     * X points of the polygon
+     *
+     */
     double x [];
 
+    /**
+     * Y points of the polygon
+     *
+     */
     double y [];
 
+    // Getter/setter
     public int getId() {
         return id;
     }
