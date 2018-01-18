@@ -6,31 +6,31 @@ import android.os.Bundle;
 
 /**
  * Created by Federico Peruzzi.
+ * Abstract android Activity for this GameEngine
  *
  */
 
 public abstract class GameActivity extends Activity {
-    /**
-     * Classe che contiene la View del gioco.
-     * la classe conterra il game loop e gestira le call
-     * di update e draw.
-     */
 
-    GameView gameView;
+    /**
+     * GameView class that holds the game loop and invoke
+     * the update call and draw call.
+     *
+     */
+    public GameView gameView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Inizializziamo la UI e la impostiamo come view principale.
-        // La UI vuole come parametri di inzializzazione il contesto
-        // e la dimensione dello schermo sul quale dovra girare
+
+        // create the activity and set the surface with a gameView extended by the user.
         gameView = loadGameView();
         setContentView(gameView);
     }
 
     /**
-     * Questo metodo viene eseguito quando la Activity arriva/torna
-     * in primo piano.
+     * This method is invoked when an activity is resumed.
+     *
      */
     @Override
     protected void onResume() {
@@ -39,8 +39,8 @@ public abstract class GameActivity extends Activity {
     }
 
     /**
-     * Questo metodo viene eseguito quando la Activity non e piu
-     * in primo piano.
+     * This method is invoked when an activity is paused.
+     *
      */
     @Override
     protected void onPause() {
@@ -49,13 +49,20 @@ public abstract class GameActivity extends Activity {
     }
 
     /**
-     * Disable BackButton pressing, if you want to override for specific porpouse do it.
+     * Disable BackButton pressing, if you want to override for specific purpose do it.
      * for navigate through activitys use GameActivityManager instead.
+     *
      */
     @Override
     public void onBackPressed() {
 
     }
 
+    /**
+     * This method is called into the onCreate() method of the Activity.
+     * Add to the activity the surface that the user implemented.
+     *
+     * @return the GameView that control and draw the surface
+     */
     public abstract GameView loadGameView();
 }

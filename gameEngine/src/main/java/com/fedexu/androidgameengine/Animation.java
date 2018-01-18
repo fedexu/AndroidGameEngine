@@ -64,11 +64,11 @@ public class Animation {
     /**
      * Constructor for set the animation with the given parameter.
      *
-     * @param bitmapSheet
-     * @param frameCount
-     * @param framePeriod
-     * @param frameWidth
-     * @param frameHeight
+     * @param bitmapSheet The sprite
+     * @param frameCount number of frame in the sprite
+     * @param framePeriod time between one frame and the next
+     * @param frameWidth width dimension of the sprite
+     * @param frameHeight height dimension of the sprite
      */
     public Animation(Bitmap bitmapSheet, int frameCount, int framePeriod, int frameWidth, int frameHeight) {
 
@@ -87,7 +87,7 @@ public class Animation {
     /**
      * Get the current frame representation based on the timed flag.
      *
-     * @param deltaFrameTime
+     * @param deltaFrameTime time between one game loop an the other
      * @return Rect window for the correct frame
      */
     public Rect getCurrentFrame(long deltaFrameTime) {
@@ -102,7 +102,7 @@ public class Animation {
     /**
      * Calculate the right Rect window for the continuous animation.
      *
-     * @param time
+     * @param time current time
      * @return Rect window for the correct frame
      */
     private Rect continuosAnimation(long time){
@@ -123,8 +123,8 @@ public class Animation {
     /**
      * Calculate the right Rect window for the continuous animation.
      *
-     * @param time
-     * @param deltaFrameTime
+     * @param time current time
+     * @param deltaFrameTime time between one game loop an the other
      * @return Rect window for the correct frame
      */
     private Rect timedAnimation(long time,long deltaFrameTime){
@@ -141,7 +141,7 @@ public class Animation {
     /**
      * Configuration for the timed animation.
      *
-     * @param time
+     * @param time current time
      */
     public void setAnimationDurationTime(long time){
         this.animationDurationTime = time;
@@ -151,7 +151,7 @@ public class Animation {
     /**
      * Configuration for the timed animation.
      *
-     * @param time
+     * @param time current time
      */
     public void setAnimationDurationTime(long time, int framePeriod){
         this.framePeriod = framePeriod;

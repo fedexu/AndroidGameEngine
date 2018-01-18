@@ -57,6 +57,8 @@ and the following line into the build.gradle file in the dependencies:
 
 ## TODO improvment
 
+- Add feature with a "GameActivityManager" to navigate through activitys.
+
 - Implements collision check with Reycast instead of the AABB.
 
 - Modify the structure for a multi-thread Engine architecture.

@@ -91,14 +91,19 @@ public class GameData<T> {
         return averageSecondFps;
     }
 
-    public GameObject getLockedTouched(){return this.lockedTouched;}
+    public GameObject getLockedTouched(){
+        return this.lockedTouched;
+    }
 
     //until the touchScreen is released
     public void setLockedTouched(GameObject lockedTouched){
         this.lockedTouched = lockedTouched;
     }
 
-    public long getDeltaFrameTime(){return this.deltaFrameTime;}
+    public long getDeltaFrameTime(){
+        return this.deltaFrameTime;
+    }
+
     public void updateFps(long deltaFrameTime) {
         this.deltaFrameTime = deltaFrameTime;
         if (deltaFrameTime >= 1) {
