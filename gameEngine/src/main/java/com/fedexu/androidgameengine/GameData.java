@@ -11,36 +11,68 @@ import java.util.Map;
 
 /**
  * Created by Federico Peruzzi.
+ * Class that holds a view generic data. For a specific data to hold,
+ * put a custom class in the viewData variable.
  *
  */
 
 public class GameData<T> {
 
-    protected ArrayList<GameObject> gameObjects;
+    /**
+     * List of object to be managed in the view.
+     */
+    private ArrayList<GameObject> gameObjects;
 
-    protected Map<String,Long> clocks;
+    /**
+     * A map of clock for timing some action.
+     */
+    private Map<String,Long> clocks;
 
-    protected GameObject lockedTouched;
+    /**
+     * GameObject to lock if necessary after a touch on the screen.
+     */
+    private GameObject lockedTouched;
 
-    protected Canvas canvas;
+    /**
+     * The surface where the object is drawn.
+     */
+    private SurfaceHolder surfaceHolder;
 
-    protected SurfaceHolder surfaceHolder;
+    /**
+     * Fps in the current cycle.
+     */
+    private long fps;
 
-    protected long fps;
+    /**
+     * Delta time between one fps and the next.
+     */
+    private long deltaFrameTime;
 
-    protected long deltaFrameTime;
+    /**
+     * Resets after 1 sec.
+     */
+    private long averageSecond;
 
-    protected long averageSecond;
+    /**
+     * Average fps.
+     */
+    private long averageSecondFps;
 
-    protected long averageSecondFps;
+    /**
+     * Number of fps drawn.
+     */
+    private long nFps;
 
-    protected long nFps;
+    /**
+     * If true, the Engine draw the bounding box and the fps.
+     */
+    private boolean debugEnable;
 
-    protected boolean debugEnable;
-
-    //Holds custom additional class data for the user implementation
-    //TODO find a more elegant way to do this and not a generic Object
-    protected T viewData;
+    /**
+     * Holds custom additional class data for the user implementation
+     * TODO find a more elegant way to do this and not a generic Object
+     */
+    private T viewData;
 
     public GameData(SurfaceHolder surfaceHolder) {
 
@@ -61,14 +93,6 @@ public class GameData<T> {
 
     public void setGameObjects(ArrayList<GameObject> gameObjects) {
         this.gameObjects = gameObjects;
-    }
-
-    public Canvas getCanvas() {
-        return this.canvas;
-    }
-
-    public void setCanvas(Canvas canvas) {
-        this.canvas = canvas;
     }
 
     public SurfaceHolder getSurfaceHolder() {
@@ -104,6 +128,11 @@ public class GameData<T> {
         return this.deltaFrameTime;
     }
 
+    /**
+     * Update every cycle the fps information and decrease clocks time.
+     *
+     * @param deltaFrameTime
+     */
     public void updateFps(long deltaFrameTime) {
         this.deltaFrameTime = deltaFrameTime;
         if (deltaFrameTime >= 1) {
@@ -126,6 +155,9 @@ public class GameData<T> {
         }
     }
 
+    /**
+     * Run every cycle. Update the Positon of GameObjects
+     */
     public void updateGameObjectData() {
         for (GameObject g : this.getGameObjects()) {
                 if (g.getSpeed() != 0)
