@@ -1,6 +1,5 @@
 package com.fedexu.androidgameengine;
 
-import android.graphics.Canvas;
 import android.view.SurfaceHolder;
 
 import com.fedexu.androidgameengine.object.GameObject;
@@ -160,7 +159,7 @@ public class GameData<T> {
      */
     public void updateGameObjectData() {
         for (GameObject g : this.getGameObjects()) {
-                if (g.getSpeed() != 0)
+                if (!g.isImmovable())
                     g.updatePosition(this);
                 g.update(this);
         }

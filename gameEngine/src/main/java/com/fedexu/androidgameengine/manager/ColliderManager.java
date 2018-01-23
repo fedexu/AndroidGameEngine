@@ -96,7 +96,7 @@ public class ColliderManager {
         ArrayList<GameObject> gameObjects = gameData.getGameObjects();
         for (GameObject g : gameObjects) {
             // To save cycle time we skip objects that have speed != 0 and have untouchable == false.
-            if (g.getSpeed() != 0 && !g.isUntouchable()) {
+            if (!g.isImmovable() && !g.isUntouchable()) {
                 for (GameObject collideObject : gameObjects) {
                     // Check only object that isn't itself and isn't untouchable.
                     if (g != collideObject && !collideObject.isUntouchable()) {

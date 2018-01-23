@@ -61,9 +61,14 @@ public abstract class GameObject {
 
     /**
      * Speed vector.
-     * If the speed is equal to 0 the method onCollide() will not be called.
      */
     private float speed;
+
+    /**
+     * Acceleration vector.
+     * Will be added the delta velocity every update.
+     */
+    private float acceleration;
 
     /**
      * If false the object will not be drawn.
@@ -116,6 +121,7 @@ public abstract class GameObject {
         this.polygon = new Polygon();
         this.oldPolygon = new Polygon();
         this.speed = 0;
+        this.acceleration = 0;
         this.directionAngle = 0;
 
         this.isVisible = basicObject.isVisible();
@@ -206,6 +212,14 @@ public abstract class GameObject {
 
     public void setCurrentAnimation(String name){
         this.currentAnimation = name;
+    }
+
+    public float getAcceleration() {
+        return acceleration;
+    }
+
+    public void setAcceleration(float acceleration) {
+        this.acceleration = acceleration;
     }
 
     // END setter/getter
@@ -332,10 +346,12 @@ public abstract class GameObject {
      * @param gameData
      */
     public void updatePosition(GameData gameData) {
-        if (!this.immovable) {
-            this.translate((int) ((Math.cos(Math.toRadians(this.getDirectionAngle())) * this.getSpeed()) * (1 / (double) gameData.getFps()) + this.getCenter().x),
-                    (int) (((-Math.sin(Math.toRadians(this.getDirectionAngle()))) * this.getSpeed()) * (1 / (double) gameData.getFps()) + this.getCenter().y));
-        }
+
+        this.setSpeed((float) (this.getSpeed() + ( this.getAcceleration() * (1 / (double) gameData.getFps() ) )) );
+
+        this.translate((int) ((Math.cos(Math.toRadians(this.getDirectionAngle())) * this.getSpeed()) * (1 / (double) gameData.getFps()) + this.getCenter().x),
+                (int) (((-Math.sin(Math.toRadians(this.getDirectionAngle()))) * this.getSpeed()) * (1 / (double) gameData.getFps()) + this.getCenter().y));
+
     }
 
     /**
