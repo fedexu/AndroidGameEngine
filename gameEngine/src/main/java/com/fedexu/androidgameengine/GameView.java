@@ -74,7 +74,7 @@ public abstract class GameView extends SurfaceView implements Runnable {
             // Calculate the start time of the game loop
             long startFrameTime = System.currentTimeMillis();
 
-            if(gameLoopOn) {
+            if(gameLoopOn && gameData.getFps() != 0) {
                 gameData.updateGameObjectData();
 
                 ColliderManager.collisionCheck(gameData);
