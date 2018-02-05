@@ -166,5 +166,11 @@ public class Animation {
         return this.bitmapSheet;
     }
 
+    public int getFrameWidth() {
+        return frameWidth;
+    }
 
+    public int getFrameHeight() {
+        return frameHeight;
+    }
 }

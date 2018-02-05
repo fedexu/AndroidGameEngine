@@ -2,7 +2,9 @@ package com.fedexu.androidgameengine;
 
 
 
+import android.graphics.Bitmap;
 import android.graphics.Point;
+import android.graphics.Rect;
 import android.util.Log;
 
 import com.fedexu.androidgameengine.object.BasicObject;
@@ -123,6 +125,14 @@ public class EngineUtils {
      */
     public static double bounceTopBottom(double directionAngle) {
         return Math.abs(directionAngle - 360);
+    }
+
+    public static Bitmap cropBitmap(Bitmap bitMap, Rect rect){
+
+        Bitmap croppedBmp = Bitmap.createBitmap(bitMap, rect.left, rect.top,
+                rect.width(), rect.height());
+
+        return croppedBmp;
     }
 
 }

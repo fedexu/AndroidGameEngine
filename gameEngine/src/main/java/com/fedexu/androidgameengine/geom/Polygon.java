@@ -7,7 +7,7 @@ import java.util.Arrays;
 
 /**
  * Created by Federico Peruzzi.
- *
+ * A Polygon similar of the Java.awt.Polygon
  */
 
 public class Polygon {
@@ -291,4 +291,12 @@ public class Polygon {
 
     }
 
+    public Point[] getPoint(){
+        Point[] points = new Point[npoints];
+
+        for(int i = 0; i < npoints; i++ )
+            points[i] = new Point(xpoints[i], ypoints[i]);
+
+        return points;
+    }
 }

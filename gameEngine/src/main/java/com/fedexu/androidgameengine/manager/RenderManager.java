@@ -2,9 +2,11 @@ package com.fedexu.androidgameengine.manager;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 
 import com.fedexu.androidgameengine.Animation;
+import com.fedexu.androidgameengine.EngineUtils;
 import com.fedexu.androidgameengine.GameData;
 import com.fedexu.androidgameengine.object.GameObject;
 
@@ -46,7 +48,17 @@ public class RenderManager {
                 // Draw the object sprite if the object is visible.
                 Animation animation = g.getCurrentAnimation();
                 if (animation != null && g.isVisible()) {
-                    c.drawBitmap(animation.getBitmapSheet(), animation.getCurrentFrame(gameData.getDeltaFrameTime()), g.getBoundingBox(), g.getPaint());
+                    /*if(g.getGradientAngle() != 0){
+                        Matrix matrix = new Matrix();
+
+                        matrix.postScale(g.getBoundingBox().width(), g.getBoundingBox().height());
+                        matrix.postRotate((float)g.getGradientAngle(), g.getBoundingBox().width()/2, g.getBoundingBox().height()/2);
+
+                        matrix.setTranslate(g.getBoundingBox().left, g.getBoundingBox().top);
+
+                        c.drawBitmap(EngineUtils.cropBitmap(animation.getBitmapSheet(), animation.getCurrentFrame(gameData.getDeltaFrameTime())), matrix, null);
+                    }else*/
+                        c.drawBitmap(animation.getBitmapSheet(), animation.getCurrentFrame(gameData.getDeltaFrameTime()), g.getBoundingBox(), g.getPaint());
                 }
             }
 

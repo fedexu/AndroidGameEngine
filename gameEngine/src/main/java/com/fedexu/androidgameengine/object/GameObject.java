@@ -65,6 +65,16 @@ public abstract class GameObject {
     private float speed;
 
     /**
+     * Angle of inclination applied to the object
+     */
+    private double gradientAngle;
+
+    /**
+     * Speed applied on the gradientAngle
+     */
+    private double spinSpeed;
+
+    /**
      * Acceleration vector.
      * Will be added the delta velocity every update.
      */
@@ -95,6 +105,9 @@ public abstract class GameObject {
         this.oldPolygon = new Polygon();
         this.speed = 0;
         this.directionAngle = 0;
+        this.gradientAngle = 0;
+        this.spinSpeed = 0;
+
 
         this.isVisible = true;
         this.isUntouchable = false;
@@ -123,6 +136,8 @@ public abstract class GameObject {
         this.speed = 0;
         this.acceleration = 0;
         this.directionAngle = 0;
+        this.gradientAngle = 0;
+        this.spinSpeed = 0;
 
         this.isVisible = basicObject.isVisible();
         this.isUntouchable = basicObject.isUntouchable();
@@ -220,6 +235,22 @@ public abstract class GameObject {
 
     public void setAcceleration(float acceleration) {
         this.acceleration = acceleration;
+    }
+
+    public double getGradientAngle() {
+        return gradientAngle;
+    }
+
+    public void setGradientAngle(double gradientAngle) {
+        this.gradientAngle = gradientAngle;
+    }
+
+    public double getSpinSpeed() {
+        return spinSpeed;
+    }
+
+    public void setSpinSpeed(double spinSpeed) {
+        this.spinSpeed = spinSpeed;
     }
 
     // END setter/getter
@@ -352,6 +383,11 @@ public abstract class GameObject {
         this.translate((int) ((Math.cos(Math.toRadians(this.getDirectionAngle())) * this.getSpeed()) * (1 / (double) gameData.getFps()) + this.getCenter().x),
                 (int) (((-Math.sin(Math.toRadians(this.getDirectionAngle()))) * this.getSpeed()) * (1 / (double) gameData.getFps()) + this.getCenter().y));
 
+        this.gradientAngle += spinSpeed * (1 / (double) gameData.getFps());
+        
+        while(this.gradientAngle > 360){
+            this.gradientAngle -= 360;
+        }
     }
 
     /**
