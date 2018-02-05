@@ -378,12 +378,14 @@ public abstract class GameObject {
      */
     public void updatePosition(GameData gameData) {
 
-        this.setSpeed((float) (this.getSpeed() + ( this.getAcceleration() * (1 / (double) gameData.getFps() ) )) );
+        if (this.getAcceleration() != 0)
+            this.setSpeed((float) (this.getSpeed() + ( this.getAcceleration() * (1 / (double) gameData.getFps() ) )) );
 
         this.translate((int) ((Math.cos(Math.toRadians(this.getDirectionAngle())) * this.getSpeed()) * (1 / (double) gameData.getFps()) + this.getCenter().x),
                 (int) (((-Math.sin(Math.toRadians(this.getDirectionAngle()))) * this.getSpeed()) * (1 / (double) gameData.getFps()) + this.getCenter().y));
 
-        this.gradientAngle += spinSpeed * (1 / (double) gameData.getFps());
+        if (this.getSpinSpeed() != 0)
+            this.gradientAngle += this.getSpinSpeed() * (1 / (double) gameData.getFps());
         
         while(this.gradientAngle > 360){
             this.gradientAngle -= 360;
