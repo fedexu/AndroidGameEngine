@@ -6,7 +6,7 @@
   <title>Level Builder</title>
   <style>
 	.gameObject{ position:absolute ;  border-style: solid; border-width: 1px; text-align: center;}
-	#dragZone{width: 960px; height:540px; margin:auto;}
+	#dragZoneContainer{width: 960px; height:540px; margin:auto; border-style: solid; border-width: 3px}
 	#addButton {border-style: solid;}
 	#exportData {border-style: solid;}
 	#inputWidth{width: 45px;}
@@ -14,11 +14,9 @@
 	.untouchable{  }
 	.visible{  }
 	img {  width: 100%; height: 100%; left: 0%; z-index: 0;}
+	#rotate-image { width: 3%; height: 3%; margin-top: 1%}
 	
-  </style>
-  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-  <script src="FileSaver.js"></script>
+  </style>  
   
 </head>
 <body>
@@ -31,48 +29,57 @@
 			width <input id = "inputWidth" type = "number" min="1" value = "10"> 
 			height <input id ="inputHeight" type = "number" min="1" value = "10"> 
 			<br>
-			<input type="checkbox" id="untouchable"> Untouchable
-			<input type="checkbox" id="visible" checked> Visible
-			<input type="checkbox" id="immovable">immovable
+			<input type="checkbox" id="untouchable" /> Untouchable
+			<input type="checkbox" id="visible" checked /> Visible
+			<input type="checkbox" id="immovable" />immovable
 		</div>
 
-		<div style = "position:absolute; left: 60%;"> 
+		<button id="rotate-image" style = "position:absolute; left: 40%; height: 40px; margin-top: -5px;"><img src="icons/rotateIco.png"></button>
+		
+		<div style = "position:absolute; left: 60%;clear: both;"> 
 		 <input type="file" id="fileinput" />
-		 <button id = "importData">Import Data</button> 
+		 <button id = "importData" style= "float: right;">Import Data</button> 
+		 <br>
+		 <button id = "exportData" style= "float: right;">Export Data</button> 
+		 
 		</div>
+	</div>
+	
+	
+	<div style= "padding-top: 100px;">
+		 Pixel position 
+		 <span id= "pos"></span>
+		 
+		 <br>
+		 
+		 Perc position 
+		 <span id= "posPerc"></span>
+		 
+		 <br>
+		 
+		 <span> To delete item, hover on and press Q </span>
+		 <br>
+		 <span> If you want to load an image into a box, select the image, hover on and press L </span>
+		 <br>
+		 <input type="file" id = "valueInputImage" />
+
 	</div>
 </div>
 
-<br>
-
-<div id= "dragZone" >
-	
+<div id= "dragZoneContainer">
+	<div id= "dragZone" style="height:inherit;" >
+		
+	</div>
 </div>
 
- Pizel position 
- <span id= "pos"></span>
+
  
- <br>
- 
- Perc position 
- <span id= "posPerc"></span>
- 
- <br>
- 
- <span> To delete item, Hover on and press Q </span>
- <br>
- <span> If you want to load an image into a box, insert url or path here, Hover on and press L </span>
- <br>
- <input id = "valueInputImage" type = "text">
- 
- <br>
- 
- <button id = "exportData">Export Data</button> 
- 
- <br>
- 
- 
- <script src= "script.js"></script>
+ <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+ <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+ <script src= "js/models/drawnElement.js"></script>
+ <script src= "js/drawnElementManager.js"></script>
+ <script src="js/FileSaver.js"></script>
+ <script src= "js/script.js"></script>
  
  <script> 
  

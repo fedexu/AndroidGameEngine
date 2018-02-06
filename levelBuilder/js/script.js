@@ -4,13 +4,12 @@ var _emptyGameObject = '{"id": "" ,"x": [], "y": [], "center": {"x": "", "y": ""
 var zoneWidth = $("#dragZone").width();
 var zoneHeight = $("#dragZone").height();
 var zoneBorderWidth = 3;
-var offsetLeft = $("#dragZone").position().left;
-var offsetTop = $("#dragZone").position().top;
+var offsetLeft = $("#dragZone").offset().left;	//offset: current position relative to the document. Must be updated on change
+var offsetTop = $("#dragZone").offset().top;
 
 var objIds = 0;
 
-
-$("#dragZone").css({"border-style": "solid", "border-width": "3px"});
+var drawnElements = new drawnElementManager();
 
 
 var convertToPerc = function(point, length){
@@ -55,7 +54,8 @@ $( "#addButton" ).click(function() {
 	if ($("#immovable").prop( "checked" ))
 		immovable = "immovable";
 	objIds++;
-	$("#dragZone").prepend($("<div id = '" +objIds+ "' class='gameObject " + untouchable + " " + visible + " " + immovable + "' style = 'width: " +width + "px; height: " +height + "px;'>"
+	drawnElements.insert();
+	$("#dragZone").prepend($("<div id = '" +objIds+ "' class='gameObject " + untouchable + " " + visible + " " + immovable + "' style = 'width: " +width + "px; height: " +height + "px; z-index: " + objIds+" ;'>"
 		+"<div id = 'wrapper" +objIds+ "' style ='position:relative;width: 100%; height: 100%;' > <div style= 'position:absolute; z-index: 10; left: 50%;' > " + objIds+ "</div> </div> </div>"));
 	
 	
@@ -111,7 +111,6 @@ $( "#exportData" ).click(function() {
 
 $("#importData").click(function(){
 	
-	var myFile = $('#fileinput').prop('files');
 	var files =  $('#fileinput').prop('files');
     var reader = new FileReader();
 	
@@ -164,20 +163,22 @@ $("#importData").click(function(){
 var gameObjectInitialization = function(id){
 	
 	$( "#" + id ).draggable({
-		containment: "parent",
+		containment: "#dragZone",
 		stop: function(event, ui) {
 			position = ui.helper.position();
 			
-			$( "#pos" ).text( "left: " + (position.left - offsetLeft - zoneBorderWidth) 
-				+ " , right: " + (position.left - offsetLeft - zoneBorderWidth + $(this).width() )
-				+ ", top: " + (position.top - offsetTop - zoneBorderWidth) 
-				+ " , bottom: " + (position.top - offsetTop - zoneBorderWidth + $(this).height()) 
-				+ ", center: x " +  (position.left - offsetLeft - zoneBorderWidth + ($(this).width() /2) )  + " y " + (position.top - offsetTop - zoneBorderWidth + ($(this).height() /2 ) ) );
+			$( "#pos" ).html( "left: " + (position.left - offsetLeft).toFixed(2) 
+				+ " , right: " + (position.left - offsetLeft  + $(this).width() ).toFixed(2)
+				+ ", top: " + (position.top - offsetTop ).toFixed(2) 
+				+ " , bottom: " + (position.top - offsetTop  + $(this).height()).toFixed(2) 
+				+" <br> "
+				+ "Center: x " +  (position.left - offsetLeft  + ($(this).width() /2) ).toFixed(2)  
+				+ " y " + (position.top - offsetTop  + ($(this).height() /2 ) ).toFixed(2) );
 			
-			$( "#posPerc" ).text( "left: " + convertToPercX( position.left - offsetLeft - zoneBorderWidth ) 
-				+ " , right: " +  convertToPercX(position.left - offsetLeft - zoneBorderWidth + $(this).width() )
-				+ ", top: " + convertToPercY( position.top - offsetTop - zoneBorderWidth ) 
-				+ " , bottom: " + convertToPercY(position.top - offsetTop - zoneBorderWidth + $(this).height())
+			$( "#posPerc" ).html( "left: " + convertToPercX( position.left - offsetLeft  ) 
+				+ " , right: " +  convertToPercX(position.left - offsetLeft  + $(this).width() )
+				+ ", top: " + convertToPercY( position.top - offsetTop  ) 
+				+ " , bottom: " + convertToPercY(position.top - offsetTop  + $(this).height())
 				 );
 			
 		},
@@ -185,16 +186,18 @@ var gameObjectInitialization = function(id){
 			
 			position = ui.helper.position();
 			
-			$( "#pos" ).text( "left: " + (position.left - offsetLeft - zoneBorderWidth) 
-				+ " , right: " + (position.left - offsetLeft - zoneBorderWidth + $(this).width() ) 
-				+ ", top: " + (position.top - offsetTop - zoneBorderWidth) 
-				+ " , bottom: " + (position.top - offsetTop - zoneBorderWidth + $(this).height()) 
-				+ ", center: x " +  (position.left - offsetLeft - zoneBorderWidth + ($(this).width() /2) )  + " y " + (position.top - offsetTop - zoneBorderWidth + ($(this).height() /2 ) ) );
+			$( "#pos" ).html( "left: " + (position.left - offsetLeft ).toFixed(2) 
+				+ " , right: " + (position.left - offsetLeft  + $(this).width() ).toFixed(2) 
+				+ ", top: " + (position.top - offsetTop ).toFixed(2) 
+				+ " , bottom: " + (position.top - offsetTop  + $(this).height()).toFixed(2) 
+				+" <br> "
+				+ "Center: x " +  (position.left - offsetLeft  + ($(this).width() /2) ).toFixed(2) 
+				+ " y " + (position.top - offsetTop  + ($(this).height() /2 ) ).toFixed(2) );
 			
-			$( "#posPerc" ).text( "left: " + convertToPercX( position.left - offsetLeft - zoneBorderWidth ) 
-				+ " , right: " +  convertToPercX(position.left - offsetLeft - zoneBorderWidth + $(this).width() )
-				+ ", top: " + convertToPercY( position.top - offsetTop - zoneBorderWidth ) 
-				+ " , bottom: " + convertToPercY(position.top - offsetTop - zoneBorderWidth + $(this).height())
+			$( "#posPerc" ).html( "left: " + convertToPercX( position.left - offsetLeft  ) 
+				+ " , right: " +  convertToPercX(position.left - offsetLeft  + $(this).width() )
+				+ ", top: " + convertToPercY( position.top - offsetTop  ) 
+				+ " , bottom: " + convertToPercY(position.top - offsetTop  + $(this).height())
 				 );
 				
 		}
@@ -208,9 +211,17 @@ var gameObjectInitialization = function(id){
 				 $(".markedDeletable").remove();
 			 }
 			 if(e.keyCode == 76){
-				var src = $("#valueInputImage").val();
-				var new_img = '<img style = "position: absolute;" src='+src+'>';
-				$("#wrapper" + $(".markedDeletable")[0].id).append(new_img);
+				
+				var src = $('#valueInputImage').prop('files');
+				var reader = new FileReader();
+
+				reader.onload = function(e) {
+					var new_img = '<img style = "position: absolute;" src='+e.target.result+'>';
+					$("#wrapper" + $(".markedDeletable")[0].id).append(new_img);
+				}
+
+				reader.readAsDataURL(src[0]);
+				
 			 }
 			 
 		});
@@ -221,7 +232,60 @@ var gameObjectInitialization = function(id){
 
 }
 
+function changeScale(x, srcMin, srcMax, trgMin, trgMax){
+	var unitaryScale = (x - srcMin) / (srcMax - srcMin);
+	var newRange = (trgMax - trgMin);
 
+	return newRange * unitaryScale + trgMin;
+}
+
+$( "#rotate-image" ).click(function() {
+	var prevContainerWidth = $("#dragZoneContainer").width();
+	var prevContainerHeight = $("#dragZoneContainer").height();
+	
+	zoneHeight = prevContainerWidth;
+	zoneWidth = prevContainerHeight;
+	
+	var oldOffsetLeft = offsetLeft;
+	var oldOffsetTop = offsetTop;
+	
+	//necessary cause the resizing of the container may force an item on the border to be moved inside the new area
+	var elemOldPos = [];
+	for(let i=1; i <= objIds; i++){
+		let element = $("#" + i);
+		let pos = {
+			x: (element.position().left - oldOffsetLeft),
+			y: (element.position().top - oldOffsetTop)
+		};
+		elemOldPos.push(pos);
+	}
+
+	//swap size
+	$("#dragZoneContainer").width(prevContainerHeight);
+	$("#dragZoneContainer").height(prevContainerWidth);	
+
+	offsetLeft = ($("#dragZone").offset().left);
+	offsetTop = ($("#dragZone").offset().top);
+
+	//update each object
+	for(let i=1; i <= objIds; i++){
+		let element = $("#" + i);			
+		let oldElpos = elemOldPos[i-1];
+
+		//change scale from old to new space
+		let newPosX = changeScale(oldElpos.x, 0, prevContainerWidth, 0, prevContainerHeight);
+		let newPosY = changeScale(oldElpos.y, 0, prevContainerHeight, 0, prevContainerWidth);
+		
+		console.log("OLD ", oldElpos.x, oldElpos.y);
+		console.log("NEW ", newPosX, newPosY);
+		//console.log("OFFSETS", oldOffsetLeft, oldOffsetTop);
+
+		//update pos
+		element.css({left: newPosX + offsetLeft, top: newPosY + offsetTop});
+		
+	}
+	
+});
 
 
 
