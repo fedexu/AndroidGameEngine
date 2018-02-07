@@ -167,17 +167,19 @@ var gameObjectInitialization = function(id){
 		stop: function(event, ui) {
 			position = ui.helper.position();
 			
-			$( "#pos" ).html( "left: " + (position.left - offsetLeft).toFixed(2) 
-				+ " , right: " + (position.left - offsetLeft  + $(this).width() ).toFixed(2)
-				+ ", top: " + (position.top - offsetTop ).toFixed(2) 
+			$( "#pos" ).html( " <br> " + "left: " + (position.left - offsetLeft).toFixed(2) 
+				+ " right: " + (position.left - offsetLeft  + $(this).width() ).toFixed(2)
+				+" <br> "
+				+ "top: " + (position.top - offsetTop ).toFixed(2) 
 				+ " , bottom: " + (position.top - offsetTop  + $(this).height()).toFixed(2) 
 				+" <br> "
 				+ "Center: x " +  (position.left - offsetLeft  + ($(this).width() /2) ).toFixed(2)  
 				+ " y " + (position.top - offsetTop  + ($(this).height() /2 ) ).toFixed(2) );
 			
-			$( "#posPerc" ).html( "left: " + convertToPercX( position.left - offsetLeft  ) 
+			$( "#posPerc" ).html( " <br> " + "left: " + convertToPercX( position.left - offsetLeft  ) 
 				+ " , right: " +  convertToPercX(position.left - offsetLeft  + $(this).width() )
-				+ ", top: " + convertToPercY( position.top - offsetTop  ) 
+				+" <br> "
+				+ "top: " + convertToPercY( position.top - offsetTop  ) 
 				+ " , bottom: " + convertToPercY(position.top - offsetTop  + $(this).height())
 				 );
 			
@@ -186,17 +188,19 @@ var gameObjectInitialization = function(id){
 			
 			position = ui.helper.position();
 			
-			$( "#pos" ).html( "left: " + (position.left - offsetLeft ).toFixed(2) 
-				+ " , right: " + (position.left - offsetLeft  + $(this).width() ).toFixed(2) 
-				+ ", top: " + (position.top - offsetTop ).toFixed(2) 
+			$( "#pos" ).html( " <br> " + "left: " + (position.left - offsetLeft ).toFixed(2) 
+				+ " right: " + (position.left - offsetLeft  + $(this).width() ).toFixed(2) 
+				+" <br> "
+				+ "top: " + (position.top - offsetTop ).toFixed(2) 
 				+ " , bottom: " + (position.top - offsetTop  + $(this).height()).toFixed(2) 
 				+" <br> "
 				+ "Center: x " +  (position.left - offsetLeft  + ($(this).width() /2) ).toFixed(2) 
 				+ " y " + (position.top - offsetTop  + ($(this).height() /2 ) ).toFixed(2) );
 			
-			$( "#posPerc" ).html( "left: " + convertToPercX( position.left - offsetLeft  ) 
+			$( "#posPerc" ).html( " <br> " + "left: " + convertToPercX( position.left - offsetLeft  ) 
 				+ " , right: " +  convertToPercX(position.left - offsetLeft  + $(this).width() )
-				+ ", top: " + convertToPercY( position.top - offsetTop  ) 
+				+" <br> "
+				+ "top: " + convertToPercY( position.top - offsetTop  ) 
 				+ " , bottom: " + convertToPercY(position.top - offsetTop  + $(this).height())
 				 );
 				
