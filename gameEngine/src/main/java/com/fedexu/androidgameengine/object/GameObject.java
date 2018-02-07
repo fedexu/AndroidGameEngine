@@ -27,7 +27,7 @@ public abstract class GameObject {
     /**
      * Shape Define.
      */
-    private Polygon polygon;
+    protected Polygon polygon;
 
     /**
      * Last fps object rapresentation.

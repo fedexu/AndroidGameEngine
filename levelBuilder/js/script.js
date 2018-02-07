@@ -101,13 +101,20 @@ $( "#exportData" ).click(function() {
 		
 		exportJson.push(gameObject);
 	});
-	
+
+	exportJson.sort(SortByName);
+
 	var filename = "levelBuild";
 	var blob = new Blob([JSON.stringify(exportJson)], {type: "application/json;charset=utf-8"});
 	saveAs(blob, filename+".json");
 	
 });
 
+function SortByName(a, b){
+	  var aId = parseInt(a.id);
+	  var bId = parseInt(b.id); 
+	  return ((aId < bId) ? -1 : ((aId > bId) ? 1 : 0));
+}
 
 $("#importData").click(function(){
 	
@@ -140,9 +147,9 @@ $("#importData").click(function(){
 			if (ele.immovable)
 				immovable = "immovable";
 			
-			$("#dragZone").prepend($("<div id = '" +ele.id+ "' class='gameObject " + untouchable + " " + visible + " " + immovable + "' style = 'width: " +width + "px; height: " +height + "px;'>"
-				+"<div id = 'wrapper" +ele.id+ "' style ='position:relative;width: 100%; height: 100%;' > <div style= 'position:absolute; z-index: 10; left: 50%;' > " + ele.id+ "</div> </div> </div>"));
+			$("#dragZone").prepend($("<div id = '" +ele.id+ "' class='gameObject " + untouchable + " " + visible + " " + immovable + "' style = 'width: " +width + "px; height: " +height + "px; z-index: " + ele.id+" ;'>"+"<div id = 'wrapper" +ele.id+ "' style ='position:relative;width: 100%; height: 100%;' > <div style= 'position:absolute; z-index: 10; left: 50%;' > " + ele.id+ "</div> </div> </div>"));
 			
+
 			objIds = ele.id;
 			
 			/* $( "#" + ele.id ).position().left = left;
