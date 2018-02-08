@@ -50,9 +50,12 @@ public abstract class GameObject {
     private String currentAnimation;
 
     /**
-     * This object is uset do draw the bounding box for debug.
+     * This object is used do draw the bounding box for debug.
      */
+    //to be one object
     private Paint paint;
+
+    private String text;
 
     /**
      * Angle to apply the speed vector.
@@ -95,6 +98,8 @@ public abstract class GameObject {
      */
     private boolean immovable;
 
+    private boolean showText;
+
     /**
      * Empty constructor:
      * simply initialize the object value.
@@ -114,10 +119,6 @@ public abstract class GameObject {
         this.immovable = false;
 
         this.animations = new HashMap<>();
-
-        this.paint = new Paint();
-        paint.setStyle(Paint.Style.STROKE);
-        paint.setColor(Color.WHITE);
 
     }
 
@@ -145,10 +146,6 @@ public abstract class GameObject {
 
         this.animations = new HashMap<>();
 
-        this.paint = new Paint();
-        paint.setStyle(Paint.Style.STROKE);
-        paint.setColor(Color.WHITE);
-
         for(int i = 0; i < basicObject.getX().length; i++){
             this.polygon.addPoint((int)basicObject.getX()[i], (int)basicObject.getY()[i]);
         }
@@ -159,10 +156,6 @@ public abstract class GameObject {
 
     public Polygon getPolygon() {
         return this.polygon;
-    }
-
-    public Paint getPaint() {
-        return this.paint;
     }
 
     public Path getPath() {

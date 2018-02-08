@@ -33,6 +33,10 @@ public class RenderManager {
         if (gameData.getSurfaceHolder().getSurface().isValid()) {
 
             Canvas c = gameData.getSurfaceHolder().lockCanvas();
+            Paint paint = new Paint();
+            paint.setStyle(Paint.Style.STROKE);
+            paint.setColor(Color.WHITE);
+            paint.setTextSize(40);
 
             // Draw a standard black background.
             c.drawColor(Color.BLACK);
@@ -43,7 +47,7 @@ public class RenderManager {
 
                 // If debug flag is true draw the boundingBox.
                 if (gameData.isDebugEnable() && g.isVisible())
-                    c.drawPath(g.getPath(), g.getPaint());
+                    c.drawPath(g.getPath(), paint);
 
                 // Draw the object sprite if the object is visible.
                 Animation animation = g.getCurrentAnimation();
@@ -58,16 +62,12 @@ public class RenderManager {
 
                         c.drawBitmap(EngineUtils.cropBitmap(animation.getBitmapSheet(), animation.getCurrentFrame(gameData.getDeltaFrameTime())), matrix, null);
                     }else*/
-                        c.drawBitmap(animation.getBitmapSheet(), animation.getCurrentFrame(gameData.getDeltaFrameTime()), g.getBoundingBox(), g.getPaint());
+                        c.drawBitmap(animation.getBitmapSheet(), animation.getCurrentFrame(gameData.getDeltaFrameTime()), g.getBoundingBox(), paint);
                 }
             }
 
             // Display the average FPS if debug flag is true.
             if (gameData.isDebugEnable()) {
-                Paint paint = new Paint();
-                paint.setStyle(Paint.Style.STROKE);
-                paint.setColor(Color.WHITE);
-                paint.setTextSize(40);
                 c.drawText("FPS:" + gameData.getAverageSecondFps(), 30, 80, paint);
             }
 
