@@ -3,6 +3,7 @@ package com.fedexu.androidgameengine;
 
 
 import android.graphics.Bitmap;
+import android.graphics.Matrix;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.util.Log;
@@ -127,12 +128,44 @@ public class EngineUtils {
         return Math.abs(directionAngle - 360);
     }
 
+
+    /**
+     * Crop the input Bitmap on the Rect position and return a new Bitmap.
+     *
+     * @param bitMap to crop
+     * @param rect window to cut on the bitmap
+     * @return the cropped image
+     */
     public static Bitmap cropBitmap(Bitmap bitMap, Rect rect){
 
-        Bitmap croppedBmp = Bitmap.createBitmap(bitMap, rect.left, rect.top,
-                rect.width(), rect.height());
+        return Bitmap.createBitmap(bitMap, rect.left, rect.top, rect.width(), rect.height());
+    }
 
-        return croppedBmp;
+    /**
+     * Flip the bitmap of the current Animation, horizontally, vertically
+     * or both.
+     *
+     * @param source the bitmap to flip
+     * @param vertically flag to flip vertically
+     * @param horizontally flag to flip horizontally
+     * @return the bitmap flipped
+     */
+    public static Bitmap flipBitmap(Bitmap source, boolean vertically, boolean horizontally) {
+        Matrix matrix = new Matrix();
+
+        Bitmap result = Bitmap.createScaledBitmap(source, source.getWidth(), source.getHeight(), true);
+
+        if(vertically){
+            matrix.postScale(-1, 1, result.getWidth()/2, result.getHeight()/2);
+            result = Bitmap.createBitmap(result, 0, 0, result.getWidth(), result.getHeight(), matrix, true);
+        }
+
+        if(horizontally){
+            matrix.postScale(1, -1, result.getWidth()/2, result.getHeight()/2);
+            result = Bitmap.createBitmap(result, 0, 0, result.getWidth(), result.getHeight(), matrix, true);
+        }
+
+        return result;
     }
 
 }

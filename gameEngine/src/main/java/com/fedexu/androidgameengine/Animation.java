@@ -1,6 +1,7 @@
 package com.fedexu.androidgameengine;
 
 import android.graphics.Bitmap;
+import android.graphics.Matrix;
 import android.graphics.Rect;
 
 /**
@@ -156,6 +157,28 @@ public class Animation {
     public void setAnimationDurationTime(long time, int framePeriod){
         this.framePeriod = framePeriod;
         setAnimationDurationTime(time);
+    }
+
+    /**
+     * Flip the bitmap of the current Animation, horizontally, vertically
+     * or both.
+     *
+     * @param vertically flag to flip vertically
+     * @param horizontally flag to flip horizontally
+     */
+    public void flipBitmap(boolean vertically, boolean horizontally) {
+        Matrix matrix = new Matrix();
+
+        if(vertically){
+            matrix.postScale(-1, 1, this.bitmapSheet.getWidth()/2, this.bitmapSheet.getHeight()/2);
+            this.bitmapSheet = Bitmap.createBitmap(this.bitmapSheet, 0, 0, this.bitmapSheet.getWidth(), this.bitmapSheet.getHeight(), matrix, true);
+        }
+
+        if(horizontally){
+            matrix.postScale(1, -1, this.bitmapSheet.getWidth()/2, this.bitmapSheet.getHeight()/2);
+            this.bitmapSheet = Bitmap.createBitmap(this.bitmapSheet, 0, 0, this.bitmapSheet.getWidth(), this.bitmapSheet.getHeight(), matrix, true);
+        }
+
     }
 
     public void setFrameCount (int frameCount){
