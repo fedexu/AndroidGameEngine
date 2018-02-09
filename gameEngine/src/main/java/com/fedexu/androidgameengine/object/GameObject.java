@@ -264,7 +264,7 @@ public abstract class GameObject {
      * @return double
      */
     public double getSpeedX() {
-        return Math.cos(Math.toRadians(this.getDirectionAngle()) * this.getSpeed());
+        return Math.cos(Math.toRadians(this.getDirectionAngle())) * this.getSpeed();
     }
 
     /**
@@ -273,7 +273,7 @@ public abstract class GameObject {
      * @return double
      */
     public double getSpeedY() {
-        return Math.sin(Math.toRadians(this.getDirectionAngle()) * this.getSpeed());
+        return Math.sin(Math.toRadians(this.getDirectionAngle())) * this.getSpeed();
     }
 
     /**
@@ -374,8 +374,24 @@ public abstract class GameObject {
         if (this.getAcceleration() != 0)
             this.setSpeed((float) (this.getSpeed() + ( this.getAcceleration() * (1 / (double) gameData.getFps() ) )) );
 
-        this.translate((int) ((Math.cos(Math.toRadians(this.getDirectionAngle())) * this.getSpeed()) * (1 / (double) gameData.getFps()) + this.getCenter().x),
-                (int) (((-Math.sin(Math.toRadians(this.getDirectionAngle()))) * this.getSpeed()) * (1 / (double) gameData.getFps()) + this.getCenter().y));
+        //Protection for no movement if the device running on hight fps and
+        //the object is expected to moved
+        int xTraslation = (int) ( getSpeedX() * (1 / (double) gameData.getFps()) );
+        if (xTraslation == 0 && (int) getSpeedX() != 0)
+            //controllo se sono nel secondo o terzo quandrante
+            if ( Math.abs(Math.toRadians(directionAngle)) > Math.PI/2 && Math.abs(Math.toRadians(directionAngle)) < (Math.PI*3)/2 )
+                xTraslation = -1;
+            else
+                xTraslation = 1;
+
+        int yTraslation = (int) ( - getSpeedY() * (1 / (double) gameData.getFps()) );
+        if (yTraslation == 0 && (int) getSpeedY() != 0)
+            if (Math.abs(Math.toRadians(directionAngle)) > 0  && Math.abs(Math.toRadians(directionAngle)) < Math.PI)
+                yTraslation = 1;
+            else
+                yTraslation = -1;
+
+        this.translate( xTraslation + this.getCenter().x,yTraslation + this.getCenter().y );
 
         if (this.getSpinSpeed() != 0)
             this.gradientAngle += this.getSpinSpeed() * (1 / (double) gameData.getFps());
