@@ -32,6 +32,7 @@ public class FontCache {
         if(typeface == null) {
             try {
                 typeface = Typeface.createFromAsset(context.getAssets(), name);
+                Log.d("FONT LOADER: " , "font " + name +" loaded!");
             }
             catch (Exception e) {
                 Log.e( "Font loader" , e.toString());

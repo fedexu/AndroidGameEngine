@@ -4,11 +4,13 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.Rect;
 
 import com.fedexu.androidgameengine.Animation;
 import com.fedexu.androidgameengine.EngineUtils;
 import com.fedexu.androidgameengine.GameData;
 import com.fedexu.androidgameengine.object.GameObject;
+import com.fedexu.androidgameengine.object.TextObject;
 
 import java.util.ArrayList;
 
@@ -45,12 +47,15 @@ public class RenderManager {
             ArrayList<GameObject> gameObjects = gameData.getGameObjects();
             for (GameObject g : gameObjects) {
 
+                Rect boundingBox = g.getBoundingBox();
+                Animation animation = g.getCurrentAnimation();
+                TextObject textObject = g.getText();
+
                 // If debug flag is true draw the boundingBox.
                 if (gameData.isDebugEnable() && g.isVisible())
                     c.drawPath(g.getPath(), paint);
 
                 // Draw the object sprite if the object is visible.
-                Animation animation = g.getCurrentAnimation();
                 if (animation != null && g.isVisible()) {
                     /*if(g.getGradientAngle() != 0){
                         Matrix matrix = new Matrix();
@@ -62,8 +67,13 @@ public class RenderManager {
 
                         c.drawBitmap(EngineUtils.cropBitmap(animation.getBitmapSheet(), animation.getCurrentFrame(gameData.getDeltaFrameTime())), matrix, null);
                     }else*/
-                        c.drawBitmap(animation.getBitmapSheet(), animation.getCurrentFrame(gameData.getDeltaFrameTime()), g.getBoundingBox(), paint);
+                    c.drawBitmap(animation.getBitmapSheet(), animation.getCurrentFrame(gameData.getDeltaFrameTime()), boundingBox, paint);
                 }
+                // Draw text if flag is enable and there is Text.
+                if(g.isShowText() && textObject != null)
+                    for(String line: textObject.getText())
+                        //added textObject.getPixelSize() to draw text inside the Box
+                        c.drawText(line, boundingBox.left + textObject.getOffsetX(), boundingBox.top + textObject.getOffsetY() + textObject.getPixelSize(), textObject.getPaint());
             }
 
             // Display the average FPS if debug flag is true.

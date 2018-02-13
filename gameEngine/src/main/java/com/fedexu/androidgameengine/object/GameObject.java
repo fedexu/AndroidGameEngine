@@ -12,6 +12,8 @@ import com.fedexu.androidgameengine.EngineUtils;
 import com.fedexu.androidgameengine.GameData;
 import com.fedexu.androidgameengine.geom.Polygon;
 
+import org.w3c.dom.Text;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -50,12 +52,9 @@ public abstract class GameObject {
     private String currentAnimation;
 
     /**
-     * This object is used do draw the bounding box for debug.
+     * This object is used do draw the text into the object.
      */
-    //to be one object
-    private Paint paint;
-
-    private String text;
+    private TextObject text;
 
     /**
      * Angle to apply the speed vector.
@@ -98,6 +97,9 @@ public abstract class GameObject {
      */
     private boolean immovable;
 
+    /**
+     * If true will be draw the text inside the object.
+     */
     private boolean showText;
 
     /**
@@ -113,7 +115,7 @@ public abstract class GameObject {
         this.gradientAngle = 0;
         this.spinSpeed = 0;
 
-
+        this.showText = false;
         this.isVisible = true;
         this.isUntouchable = false;
         this.immovable = false;
@@ -143,6 +145,7 @@ public abstract class GameObject {
         this.isVisible = basicObject.isVisible();
         this.isUntouchable = basicObject.isUntouchable();
         this.immovable = basicObject.isImmovable();
+        this.showText = false;
 
         this.animations = new HashMap<>();
 
@@ -244,6 +247,22 @@ public abstract class GameObject {
 
     public void setSpinSpeed(double spinSpeed) {
         this.spinSpeed = spinSpeed;
+    }
+
+    public TextObject getText() {
+        return text;
+    }
+
+    public void setText(TextObject text) {
+        this.text = text;
+    }
+
+    public boolean isShowText() {
+        return showText;
+    }
+
+    public void setShowText(boolean showText) {
+        this.showText = showText;
     }
 
     // END setter/getter

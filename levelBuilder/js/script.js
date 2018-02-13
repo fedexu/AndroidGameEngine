@@ -188,7 +188,10 @@ var gameObjectInitialization = function(id){
 				+" <br> "
 				+ "top: " + convertToPercY( position.top - offsetTop  ) 
 				+ " , bottom: " + convertToPercY(position.top - offsetTop  + $(this).height())
-				 );
+				+" <br> "
+				+ "Center: x " +  convertToPercX(position.left - offsetLeft - zoneBorderWidth + ($(this).width() /2) )  
+				+ " y " + convertToPercY(position.top - offsetTop - zoneBorderWidth + ($(this).height() /2 ) ) 
+				);
 			
 		},
 		drag: function(event, ui){
@@ -209,7 +212,10 @@ var gameObjectInitialization = function(id){
 				+" <br> "
 				+ "top: " + convertToPercY( position.top - offsetTop  ) 
 				+ " , bottom: " + convertToPercY(position.top - offsetTop  + $(this).height())
-				 );
+				+" <br> "
+				+ "Center: x " +  convertToPercX(position.left - offsetLeft - zoneBorderWidth + ($(this).width() /2) )  
+				+ " y " + convertToPercY(position.top - offsetTop - zoneBorderWidth + ($(this).height() /2 ) ) 
+				);
 				
 		}
 	});
